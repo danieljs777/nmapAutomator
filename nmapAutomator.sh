@@ -295,14 +295,28 @@ if [ ! -f /usr/share/nmap/scripts/vulners.nse ]; then
         echo -e "${RED}Please install 'vulners.nse' nmap script:"
         echo -e "${RED}https://github.com/vulnersCom/nmap-vulners"
         echo -e "${RED}"
-        echo -e "${RED}Skipping CVE scan!"
+        echo -e "${RED}Skipping VULNERS CVE scan!"
         echo -e "${NC}"
 else    
-        echo -e "${YELLOW}Running CVE scan on $portType ports"
+        echo -e "${YELLOW}Running VULNERS CVE scan on $portType ports"
         echo -e "${NC}"
         $nmapType -sV --script vulners --script-args mincvss=7.0 -p$(echo "${ports}") -oN nmap/CVEs_"${HOST}".nmap "${HOST}" "${DNSSTRING}"
         echo ""
 fi
+
+if [ ! -f /usr/share/nmap/scripts/vulscan ]; then
+        echo -e "${RED}Please install 'vulscan' nmap script:"
+        echo -e "${RED}https://github.com/scipag/vulscan"
+        echo -e "${RED}"
+        echo -e "${RED}Skipping VULSCAN scan!"
+        echo -e "${NC}"
+else    
+        echo -e "${YELLOW}Running VULSCAN scan on $portType ports"
+        echo -e "${NC}"
+        $nmapType -sV --script vulscan -p$(echo "${ports}") -oN nmap/VULSCAN_"${HOST}".nmap "${HOST}" "${DNSSTRING}"
+        echo ""
+fi
+
 
 echo ""
 echo -e "${YELLOW}Running Vuln scan on $portType ports"
