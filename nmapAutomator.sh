@@ -139,9 +139,9 @@ fi
 checkPing(){
 pingTest=$(ping -c 1 -W 3 "${HOST}" | grep ttl)
 if [[ -z $pingTest ]]; then
-        echo "nmap -Pn"
+        echo "nmap -Pn -g 53 -D RND:15 -vvv"
 else
-        echo "nmap"
+        echo "nmap -g 53 -D RND:15 -vvv"
         ttl=$(echo "${pingTest}" | cut -d " " -f 6 | cut -d "=" -f 2)
         echo "${ttl}"
 fi
